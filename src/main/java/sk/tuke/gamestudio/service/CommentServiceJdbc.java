@@ -1,5 +1,6 @@
 package sk.tuke.gamestudio.service;
 
+import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 
@@ -9,28 +10,24 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreServiceJdbc implements ScoreService {
-
+public class CommentServiceJdbc implements CommentService {
     private static final String JDBC_URL = "jdbc:postgresql://localhost/GameStudio";
     private static final String JDBC_USER = "postgres";
     private static final String JDBC_PASSWORD = "postgres";
 
-
-
     @Override
-    public void addScore(Score score) {
-
-        final String STATEMENT_ADD_SCORE = "INSERT INTO score VALUES (?, ?, ?, ?)";
+    public void addComment(Comment comment) {
+        final String STATEMENT_ADD_SCORE = "INSERT INTO  comment VALUES (?, ?, ?, ?)";
 
         try(
                 var connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
                 var statement = connection.prepareStatement(STATEMENT_ADD_SCORE);
         )
         {
-            statement.setString(1, score.getGame());
-            statement.setString(2, score.getUsername());
-            statement.setInt(3, score.getPoints());
-            statement.setTimestamp(4,  new Timestamp(score.getPlayedAt().getTime()));
+            statement.setString(1, comment.getGame());
+            statement.setString(2, comment.getUsername());
+            statement.setString(3, comment.getCommet());
+            statement.setTimestamp(4,  new Timestamp(comment.getCommented_at().getTime()));
             statement.executeUpdate();
         }catch(SQLException e){
             throw  new ServiceException(e);
@@ -39,8 +36,8 @@ public class ScoreServiceJdbc implements ScoreService {
     }
 
     @Override
-    public List<Score> getBestScores(String game) {
-        final String STATEMENT_BEST_SCORES = "SELECT game, username, points, played_at FROM score WHERE game= ? ORDER BY points DESC LIMIT 5";
+    public List<Comment> getComments(String game) {
+        final String STATEMENT_BEST_SCORES = "SELECT game, username, comment, commented_at FROM comment WHERE game= ? ORDER BY commented_at DESC";
 
         try( var connection =DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
              var statement = connection.prepareStatement(STATEMENT_BEST_SCORES)
@@ -48,22 +45,22 @@ public class ScoreServiceJdbc implements ScoreService {
         {
             statement.setString(1,game);
             try(var rs = statement.executeQuery()){
-                var scores= new ArrayList<Score>();
+                var comments= new ArrayList<Comment>();
                 while(rs.next()) {
-                    scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)));
+                    comments.add(new Comment(rs.getString(1), rs.getString(2), rs.getString(3), rs.getTimestamp(4)));
                 }
-                return scores;
+                return comments;
             }
         }catch (SQLException e) {
             throw  new ServiceException(e);
-           // System.out.println(e.getMessage());
+
         }
-       // return null;
+
     }
 
     @Override
     public void reset() {
-        final String STATEMENT_RESET = "DELETE FROM score";
+        final String STATEMENT_RESET = "DELETE FROM comment";
         try(var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
             var statement = connection.createStatement()
         )

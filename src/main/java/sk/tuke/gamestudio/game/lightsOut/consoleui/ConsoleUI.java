@@ -37,7 +37,7 @@ public class ConsoleUI {
         long timeElapsed= Duration.between(start,finish).toSeconds();
         Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
         System.out.println("game is solved");
-        System.out.println("Playing time:"+timeElapsed);
+       // System.out.println("Playing time:"+timeElapsed);
         printField();
        // extracted(timestamp);
         return timestamp;

@@ -15,12 +15,17 @@ public class Field {
 
     private final Tile[][] tiles;
 
+    private int score=0;
+
+    private long startTime=0;
+
     public Field(int rowCount, int columnCount, int mineCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.mineCount = mineCount;
         tiles = new Tile[rowCount][columnCount];
         generate();
+        startTime=System.currentTimeMillis();
     }
 
     private void generate() {
@@ -99,6 +104,8 @@ public class Field {
         return tiles[row][column];
     }
 
+//    private int score=0;
+
     public void openTile(int row, int column) {
         var tile = tiles[row][column];
         if (tile.getState() == TileState.CLOSED) {
@@ -113,9 +120,16 @@ public class Field {
             if (((Clue) tile).getValue() == 0)
                 openAdjacentTiles(row, column);
 
-            if (rowCount * columnCount - mineCount == openCount)
+            if (rowCount * columnCount - mineCount == openCount){
                 state = FieldState.SOLVED;
+
+            }
+
         }
+        if(state!=FieldState.PLAYING){
+            score=computeScore();
+        }
+
     }
 
     public void markTile(int row, int column) {
@@ -147,5 +161,26 @@ public class Field {
             if (column + 1 < columnCount)
                 openTile(row + 1, column + 1);
         }
+    }
+
+    private int computeScore(){
+        if(this.state==FieldState.SOLVED){
+            final long rawScore=rowCount*columnCount*10-(
+                    (System.currentTimeMillis()-startTime)/1000);
+        //    System.out.println("rawscore " +rawScore);
+
+            if (rawScore<=0){
+                return 0;
+            }
+            else {
+                return (int) rawScore;
+            }
+        }
+        else return 0;
+
+    }
+
+    public int getScore(){
+        return score;
     }
 }

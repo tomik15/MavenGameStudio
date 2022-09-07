@@ -29,9 +29,9 @@ public class ConsoleUI {
 //                + "coordinates are give in order of first Letter(row) then numbers(colum) example: mb4" + "\n"
 //                + "X/x as input will close the application");
 //    }
-    public Timestamp play() throws SQLException {
-        Timestamp startTimestamp=new Timestamp(System.currentTimeMillis());
-        Instant start=Instant.now();
+    public int play() throws SQLException {
+//        Timestamp startTimestamp=new Timestamp(System.currentTimeMillis());
+//        Instant start=Instant.now();
         do {
             printField();
             processInput();
@@ -41,17 +41,11 @@ public class ConsoleUI {
 
 
         }
-        Timestamp endTimestamp=new Timestamp(System.currentTimeMillis());
-       // Timestamp timestamp=endTimestamp-startTimestamp;
-
-
-        Instant finish=Instant.now();
-        long timeElapsed= Duration.between(start,finish).toSeconds();
-        Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
         printField();
         System.out.println(field.getState());
-        return  timestamp;
-
+        int score= field.getScore();
+      //  System.out.println("tuje je score"+field.getScore());
+        return score;
     }
 
     private void processInput() {

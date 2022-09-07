@@ -1,5 +1,7 @@
 package sk.tuke.gamestudio.game.tiles.core;
 
+import sk.tuke.gamestudio.game.mines.core.FieldState;
+
 import java.util.Random;
 
 public class Field {
@@ -12,12 +14,16 @@ public class Field {
     private int emptyTileRow;
 
     private int emptyTileColumn;
+    private int score=0;
+
+    private long startTime=0;
 
     public Field(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         tiles = new Tile[rowCount][columnCount];
         generate();
+        startTime=System.currentTimeMillis();
     }
 
     private void generate() {
@@ -86,6 +92,29 @@ public class Field {
                 tile++;
             }
         }
+     //  score=computeScore();
+
         return true;
+    }
+
+    public int computeScore(){
+        if(isSolved()){
+            final long rawScore=rowCount*columnCount*40-(
+                    (System.currentTimeMillis()-startTime)/1000);
+         //   System.out.println("rawscore " +rawScore);
+
+            if (rawScore<=0){
+                return 0;
+            }
+            else {
+                return (int) rawScore;
+            }
+        }
+        else return 0;
+
+    }
+
+    public int getScore(){
+        return score;
     }
 }
