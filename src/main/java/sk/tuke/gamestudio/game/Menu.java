@@ -61,9 +61,14 @@ public class Menu {
                 var list=scoreService.getBestScores("lightsOut");
                 printList(list);
                 //comment
-                System.out.println("Please enter the review of the game:");
-                var comment=scanner.nextLine();
-                commentService.addComment(new Comment(gameName,username,comment,date));
+                System.out.println("Do you want to review/give comment to the game? Y/N");
+                var line=scanner.nextLine().toUpperCase().trim();
+                if("Y".equals(line)){
+                    System.out.println("Please enter the review of the game:");
+                    var comment=scanner.nextLine();
+                    commentService.addComment(new Comment(gameName,username,comment,date));
+
+                }
                 var comments=commentService.getComments("lightsOut");
                 printCommentsList(comments);
 
@@ -87,9 +92,14 @@ public class Menu {
             var list=scoreService.getBestScores("mines");
             printList(list);
             //comment
-            System.out.println("Please enter the review of the game:");
-            var comment=scanner.nextLine();
-            commentService.addComment(new Comment(gameName,username,comment,date));
+            System.out.println("Do you want to review/give comment to the game? Y/N");
+            var line=scanner.nextLine().toUpperCase().trim();
+            if("Y".equals(line)){
+                System.out.println("Please enter the review of the game:");
+                var comment=scanner.nextLine();
+                commentService.addComment(new Comment(gameName,username,comment,date));
+
+            }
             var comments=commentService.getComments("mines");
             printCommentsList(comments);
         }
@@ -113,9 +123,14 @@ public class Menu {
                 var list=scoreService.getBestScores("tiles");
                 printList(list);
                 //comment
-                System.out.println("Please enter the review of the game:");
-                var comment=scanner.nextLine();
-                commentService.addComment(new Comment(gameName,username,comment,date));
+                System.out.println("Do you want to review/give comment to the game? Y/N");
+                var line=scanner.nextLine().toUpperCase().trim();
+                if("Y".equals(line)){
+                    System.out.println("Please enter the review of the game:");
+                    var comment=scanner.nextLine();
+                    commentService.addComment(new Comment(gameName,username,comment,date));
+
+                }
                 var comments=commentService.getComments("tiles");
                 printCommentsList(comments);
             }
