@@ -10,5 +10,7 @@ public interface CommentService {
     List<Comment> getComments(String game); //- všetky komentáre k hre, od najnovších po najstaršie (podľa commented_at)
 
     void reset(); //- vymazanie tabuľky comment
+
+
 }
 

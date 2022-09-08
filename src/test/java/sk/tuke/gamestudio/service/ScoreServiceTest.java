@@ -11,15 +11,22 @@ import java.util.Date;
 import java.util.List;
 
 public class ScoreServiceTest {
-    private final ScoreService scoreService=new ScoreServiceJdbc();
+  //  private final ScoreService scoreService=new ScoreServiceJdbc();
+    private final ScoreService scoreService=new ScoreServiceFile();
 
     @Test
     public void testReset(){
-       // scoreService.addScore(new Score("mines","Tomas",123,new Date()));
         scoreService.addScore(new Score("mines","tomas",123,new Date()));
+
+        boolean atLeast=false;
+        if(scoreService.getBestScores("mines").size()>0){
+            atLeast=true;
+        }
+        assertTrue(atLeast);
+      //  assertNotEquals(0,scoreService.getBestScores("mines").size());
         scoreService.reset();
-      //  assertEquals(0,scoreService.getBestScores("mines"));
-      assertEquals(0,scoreService.getBestScores("mines").size());
+        assertEquals(0,scoreService.getBestScores("mines").size());
+
     }
     @Test
     public void addScore(){
@@ -48,12 +55,15 @@ public class ScoreServiceTest {
         scoreService.addScore(new Score("mines","frantisek",1220,date));
 
         var score=scoreService.getBestScores("mines");
+//        for (Score score1 : score) {
+//            System.out.println(score1);
+//        }
         assertEquals(5,score.size());
         assertEquals(5,scoreService.getBestScores("mines").size());
 
         assertEquals("mines",score.get(0).getGame());
         assertEquals("frantisek",score.get(0).getUsername());
-        assertEquals(1220,score.get(2).getPoints());
+        assertEquals(1220,score.get(0).getPoints());
         assertEquals(date,score.get(0).getPlayedAt());
 
         assertEquals("mines",score.get(1).getGame());
@@ -80,4 +90,6 @@ public class ScoreServiceTest {
 
         List<Score> list=scoreService.getBestScores("mines");
    }
+
+
 }
