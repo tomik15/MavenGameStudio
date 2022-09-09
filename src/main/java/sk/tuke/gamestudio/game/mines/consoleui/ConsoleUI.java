@@ -1,13 +1,20 @@
 package sk.tuke.gamestudio.game.mines.consoleui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.game.mines.core.Clue;
 import sk.tuke.gamestudio.game.mines.core.Field;
 import sk.tuke.gamestudio.game.mines.core.FieldState;
 import sk.tuke.gamestudio.game.mines.core.Tile;
+import sk.tuke.gamestudio.service.RatingService;
+import sk.tuke.gamestudio.service.RatingServiceJdbc;
 
 import java.sql.*;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Date;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -15,6 +22,13 @@ public class ConsoleUI {
     private Field field;
 
     private Scanner scanner = new Scanner(System.in);
+
+    @Autowired
+    private RatingService ratingService;
+
+
+//    @Autowired
+//    private RatingService ratingService=new RatingServiceJdbc();
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -38,10 +52,23 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         if(field.getState()!= FieldState.SOLVED){
             printField();
+            System.out.println("Set username");
+            var username=scanner.nextLine();
+            System.out.println("Set rating for game");
+            int rating1= Integer.parseInt(scanner.nextLine());
+
+            Rating rating=new Rating("mines",username, rating1,new Date());
+            ratingService.setRating(rating);
 
 
         }
         printField();
+        //vypis rating z databazy
+        var rating = ratingService.getAverageRating("mines");
+        System.out.println("Average rating of mines:"+rating);
+
+
+
         System.out.println(field.getState());
         int score= field.getScore();
       //  System.out.println("tuje je score"+field.getScore());

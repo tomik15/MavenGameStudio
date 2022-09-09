@@ -1,5 +1,9 @@
 package sk.tuke.gamestudio.game;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.ParameterResolutionDelegate;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.game.tiles.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.tiles.core.Field;
@@ -14,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+@SpringBootApplication
 public class Menu {
 
     private enum Option {
@@ -21,9 +26,20 @@ public class Menu {
     }
     private Scanner scanner = new Scanner(System.in);
 
-    private final ScoreService scoreService=new ScoreServiceJdbc();
+  //  @Autowired
+    private ScoreService scoreService;
+  //  private final ScoreService scoreService=new ScoreServiceJdbc();
 
-    private final CommentService commentService=new CommentServiceJdbc();
+  ////  @Autowired
+    private CommentService commentService;
+//    private final CommentService commentService=new CommentServiceJdbc();
+  ///  @Autowired
+    private ConsoleUI consoleUI4tiles;
+  ///  @Autowired
+    private sk.tuke.gamestudio.game.mines.consoleui.ConsoleUI consoleUI4mines;
+ //   @Autowired
+     private sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI consoleUI4lightsout;
+
 
 
     public void run() throws SQLException {
@@ -50,8 +66,8 @@ public class Menu {
         var date=new Date();
 
         var field=new sk.tuke.gamestudio.game.lightsOut.core.Field(3,3);
-        var ui=new sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI(field);
-        ui.play();
+        consoleUI4lightsout=new sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI(field);
+        consoleUI4lightsout.play();
         if(field.isSolved()){
             var score=field.computeScore();
             if(score!=0){
@@ -82,8 +98,8 @@ public class Menu {
         var date=new Date();
 
         var field = new sk.tuke.gamestudio.game.mines.core.Field(4, 4, 1);
-        var ui = new sk.tuke.gamestudio.game.mines.consoleui.ConsoleUI(field);
-        var gameScore = ui.play();
+         consoleUI4mines = new sk.tuke.gamestudio.game.mines.consoleui.ConsoleUI(field);
+        var gameScore = consoleUI4mines.play();
      //   System.out.println(gameScore);
         if(gameScore!=0){
             System.out.println("Please enter Name");
@@ -111,8 +127,8 @@ public class Menu {
         var date=new Date();
 
         var field=new Field(2,2);
-        var ui=new ConsoleUI(field);
-        ui.play();
+         consoleUI4tiles=new ConsoleUI(field);
+        consoleUI4tiles.play();
         if(field.isSolved()){
             var score2=field.computeScore();
            // var score=field.getScore();
