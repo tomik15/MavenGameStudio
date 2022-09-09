@@ -31,21 +31,22 @@ public class RatingServiceJdbc implements RatingService{
                 var connection = DriverManager.getConnection(JDBC_URL,JDBC_USER,JDBC_PASSWORD);
                 var statement = connection.prepareStatement(STATEMENT_SET_RATING);
                 var stamenntSelect=connection.prepareStatement(STATEMENT_GET_RATING);
-                var statemntUpdate=connection.prepareStatement(STATEMENT_GET_RATING);
+                var statemntUpdate=connection.prepareStatement(STATEMENT_UPDATE);
         )
         {
             stamenntSelect.setString(1,rating.getGame());
             stamenntSelect.setString(2,rating.getUsername());
             try(var rs = stamenntSelect.executeQuery()){
-
-                var ratingint=rs.getInt(1);
+                int ratingint = 0;
+                while(rs.next()) {
+                 ratingint=rs.getInt(1);
+                }
                 if(ratingint!=0){
                     statemntUpdate.setInt(1,rating.getRating());
                     statemntUpdate.setTimestamp(2,new Timestamp(rating.getRated_at().getTime()));
                     statemntUpdate.setString(3,rating.getGame());
                     statemntUpdate.setString(4,rating.getUsername());
-
-
+                    statemntUpdate.executeUpdate();
                 }
                 else {
                     statement.setString(1, rating.getGame());
@@ -55,8 +56,6 @@ public class RatingServiceJdbc implements RatingService{
                     statement.executeUpdate();
                 }
             }
-
-
         }catch(SQLException e){
             throw  new ServiceException(e);
         }
@@ -72,8 +71,10 @@ public class RatingServiceJdbc implements RatingService{
         {
             statement.setString(1,game);
             try(var rs = statement.executeQuery()){
-
-                var rating=rs.getInt(1);
+                int rating = 0;
+                while(rs.next()) {
+                     rating = rs.getInt(1);
+                }
                 if(rating!=0){
                     return rating;
                 }
@@ -97,8 +98,10 @@ public class RatingServiceJdbc implements RatingService{
             statement.setString(1,game);
             statement.setString(2,username);
             try(var rs = statement.executeQuery()){
-
-                var rating=rs.getInt(1);
+                int rating = 0;
+                while(rs.next()) {
+                    rating = rs.getInt(1);
+                }
                if(rating!=0){
                    return rating;
                }

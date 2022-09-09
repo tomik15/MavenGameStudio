@@ -26,7 +26,7 @@ public class SpringClient {
         };
     }
 
-    @Bean
+  //  @Bean
     public CommandLineRunner runnerMines(ConsoleUI consoleMines){
         return args -> {
             consoleMines.play();
@@ -77,12 +77,12 @@ public class SpringClient {
         return new RatingServiceJdbc();
     }
 
-//    @Bean
-//    public CommandLineRunner runnerMenu(Menu menu){
-//        return args -> {
-//            menu.run();
-//        };
-//    }
+    @Bean
+    public CommandLineRunner runnerMenu(Menu menu){
+        return args -> {
+            menu.run();
+        };
+    }
 
 
 

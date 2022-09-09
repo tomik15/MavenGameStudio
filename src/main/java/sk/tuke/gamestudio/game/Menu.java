@@ -102,7 +102,7 @@ public class Menu {
         var gameScore = consoleUI4mines.play();
      //   System.out.println(gameScore);
         if(gameScore!=0){
-            System.out.println("Please enter Name");
+            System.out.println("Please enter Name for score");
             var username=scanner.nextLine();
             scoreService.addScore(new sk.tuke.gamestudio.entity.Score(gameName,username,gameScore,date));
             var list=scoreService.getBestScores("mines");

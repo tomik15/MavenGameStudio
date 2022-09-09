@@ -23,12 +23,12 @@ public class ConsoleUI {
 
     private Scanner scanner = new Scanner(System.in);
 
-    @Autowired
-    private RatingService ratingService;
-
-
 //    @Autowired
-//    private RatingService ratingService=new RatingServiceJdbc();
+//    private RatingService ratingService;
+
+
+    @Autowired
+    private RatingService ratingService=new RatingServiceJdbc();
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -50,7 +50,7 @@ public class ConsoleUI {
             printField();
             processInput();
         } while (field.getState() == FieldState.PLAYING);
-        if(field.getState()!= FieldState.SOLVED){
+        if(field.getState()== FieldState.SOLVED){
             printField();
             System.out.println("Set username");
             var username=scanner.nextLine();
