@@ -1,14 +1,27 @@
 package sk.tuke.gamestudio.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Date;
 
+@Entity
 public class Comment {
+    @Id
+    @GeneratedValue
+    private int ident;
+
+
 
     private String game;
     private String username;
     private String comment;
     private Date commented_at;
+
+    public int getIdent() {
+        return ident;
+    }
 
     public String getGame() {
         return game;

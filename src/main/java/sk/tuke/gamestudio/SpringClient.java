@@ -8,10 +8,7 @@ import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.game.Menu;
 import sk.tuke.gamestudio.game.mines.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.mines.core.Field;
-import sk.tuke.gamestudio.service.RatingService;
-import sk.tuke.gamestudio.service.RatingServiceJdbc;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJdbc;
+import sk.tuke.gamestudio.service.*;
 
 @SpringBootApplication
 public class SpringClient {
@@ -19,7 +16,7 @@ public class SpringClient {
         SpringApplication.run(SpringClient.class);
 
     }
-  //  @Bean
+    @Bean
     public CommandLineRunner runner(){
         return args -> {
             System.out.println("Hello from spring");
@@ -40,6 +37,12 @@ public class SpringClient {
             consoleTiles.play();
         };
 
+    }
+    //  @Bean
+    public CommandLineRunner runnerMenu(Menu menu){
+        return args -> {
+            menu.run();
+        };
     }
 
 
@@ -69,20 +72,26 @@ public class SpringClient {
 
     @Bean
     public ScoreService scoreService(){
-        return new ScoreServiceJdbc();
+     //  return new ScoreServiceJdbc();
+          return new ScoreServiceJPA();
     }
 
     @Bean
     public RatingService ratingService(){
-        return new RatingServiceJdbc();
+      //  return new RatingServiceJdbc();
+
+        return new RatingServiceJPA();
     }
 
     @Bean
-    public CommandLineRunner runnerMenu(Menu menu){
-        return args -> {
-            menu.run();
-        };
+    public CommentService commentService(){
+
+
+        return new CommentServiceJPA();
     }
+
+
+
 
 
 
