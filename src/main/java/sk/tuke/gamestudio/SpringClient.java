@@ -16,7 +16,7 @@ public class SpringClient {
         SpringApplication.run(SpringClient.class);
 
     }
-    @Bean
+   // @Bean
     public CommandLineRunner runner(){
         return args -> {
             System.out.println("Hello from spring");
@@ -38,7 +38,7 @@ public class SpringClient {
         };
 
     }
-    //  @Bean
+     @Bean
     public CommandLineRunner runnerMenu(Menu menu){
         return args -> {
             menu.run();
@@ -50,6 +50,16 @@ public class SpringClient {
     @Bean
     public sk.tuke.gamestudio.game.tiles.core.Field fieldTiles(){
         return new sk.tuke.gamestudio.game.tiles.core.Field(2,2);
+    }
+
+    @Bean
+    public sk.tuke.gamestudio.game.lightsOut.core.Field fieldLight(){
+        return new sk.tuke.gamestudio.game.lightsOut.core.Field(3,3);
+    }
+
+    @Bean
+    public sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI consoleLight(){
+        return new sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI(fieldLight());
     }
 
     @Bean

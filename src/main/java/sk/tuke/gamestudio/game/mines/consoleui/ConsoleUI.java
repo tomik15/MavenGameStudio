@@ -23,12 +23,12 @@ public class ConsoleUI {
 
     private Scanner scanner = new Scanner(System.in);
 
-//    @Autowired
-//    private RatingService ratingService;
-
-
     @Autowired
-    private RatingService ratingService=new RatingServiceJdbc();
+    private RatingService ratingService;
+
+
+//    @Autowired
+//    private RatingService ratingService=new RatingServiceJdbc();
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -52,20 +52,14 @@ public class ConsoleUI {
         } while (field.getState() == FieldState.PLAYING);
         if(field.getState()== FieldState.SOLVED){
             printField();
-            System.out.println("Set username");
-            var username=scanner.nextLine();
-            System.out.println("Set rating for game");
-            int rating1= Integer.parseInt(scanner.nextLine());
 
-            Rating rating=new Rating("mines",username, rating1,new Date());
-            ratingService.setRating(rating);
 
 
         }
         printField();
-        //vypis rating z databazy
-        var rating = ratingService.getAverageRating("mines");
-        System.out.println("Average rating of mines:"+rating);
+//        //vypis rating z databazy
+//        var rating = ratingService.getAverageRating("mines");
+//        System.out.println("Average rating of mines:"+rating);
 
 
 

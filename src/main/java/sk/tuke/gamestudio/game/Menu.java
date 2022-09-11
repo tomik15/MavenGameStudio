@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.ParameterResolutionDelegate;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
 import sk.tuke.gamestudio.game.tiles.consoleui.ConsoleUI;
 import sk.tuke.gamestudio.game.tiles.core.Field;
-import sk.tuke.gamestudio.service.CommentService;
-import sk.tuke.gamestudio.service.CommentServiceJdbc;
-import sk.tuke.gamestudio.service.ScoreService;
-import sk.tuke.gamestudio.service.ScoreServiceJdbc;
+import sk.tuke.gamestudio.service.*;
 
 
 import java.sql.SQLException;
@@ -25,19 +23,19 @@ public class Menu {
         TILES, MINES, LIGHTSOUT, EXIT
     }
     private Scanner scanner = new Scanner(System.in);
-
-  //  @Autowired
+    @Autowired
     private ScoreService scoreService;
   //  private final ScoreService scoreService=new ScoreServiceJdbc();
-
-  ////  @Autowired
+    @Autowired
     private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
 //    private final CommentService commentService=new CommentServiceJdbc();
-  ///  @Autowired
+   @Autowired
     private ConsoleUI consoleUI4tiles;
-  ///  @Autowired
+    @Autowired
     private sk.tuke.gamestudio.game.mines.consoleui.ConsoleUI consoleUI4mines;
- //   @Autowired
+    @Autowired
      private sk.tuke.gamestudio.game.lightsOut.consoleui.ConsoleUI consoleUI4lightsout;
 
 
@@ -88,6 +86,15 @@ public class Menu {
                 var comments=commentService.getComments("lightsOut");
                 printCommentsList(comments);
 
+                System.out.println("Set rating for game");
+                int rating1= Integer.parseInt(scanner.nextLine());
+
+                Rating rating=new Rating("lightsOut",username, rating1,new Date());
+                ratingService.setRating(rating);
+                //vypis rating z databazy
+                var rating2 = ratingService.getAverageRating("lightsOut");
+                System.out.println("Average rating of lightsout:"+rating2);
+
 
             }
         }
@@ -118,6 +125,17 @@ public class Menu {
             }
             var comments=commentService.getComments("mines");
             printCommentsList(comments);
+//
+//            System.out.println("Set username");
+//            var username=scanner.nextLine();
+            System.out.println("Set rating for game");
+            int rating1= Integer.parseInt(scanner.nextLine());
+
+            Rating rating=new Rating("mines",username, rating1,new Date());
+            ratingService.setRating(rating);
+            //vypis rating z databazy
+            var rating2 = ratingService.getAverageRating("mines");
+            System.out.println("Average rating of mines:"+rating2);
         }
     }
 
@@ -149,6 +167,15 @@ public class Menu {
                 }
                 var comments=commentService.getComments("tiles");
                 printCommentsList(comments);
+
+                System.out.println("Set rating for game");
+                int rating1= Integer.parseInt(scanner.nextLine());
+
+                Rating rating=new Rating("tiles",username, rating1,new Date());
+                ratingService.setRating(rating);
+                //vypis rating z databazy
+                var rating2 = ratingService.getAverageRating("tiles");
+                System.out.println("Average rating of tiles:"+rating2);
             }
         }
     }

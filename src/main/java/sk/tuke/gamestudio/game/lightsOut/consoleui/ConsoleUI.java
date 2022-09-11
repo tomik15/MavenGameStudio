@@ -25,22 +25,24 @@ public class ConsoleUI {
                 + "your goal is to turned on all the tiles on the field ");
     }
 
-    public Timestamp play() throws SQLException {
+    public int play() throws SQLException {
         printHelpMessage();
-        Instant start=Instant.now();
+     //   Instant start=Instant.now();
         do {
 
             printField();
             processInput();
         }while (!field.isSolved());
-        Instant finish=Instant.now();
-        long timeElapsed= Duration.between(start,finish).toSeconds();
-        Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
+//        Instant finish=Instant.now();
+//        long timeElapsed= Duration.between(start,finish).toSeconds();
+//        Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
         System.out.println("game is solved");
        // System.out.println("Playing time:"+timeElapsed);
         printField();
        // extracted(timestamp);
-        return timestamp;
+        int score= field.getScore();
+        //  System.out.println("tuje je score"+field.getScore());
+        return score;
     }
 
 

@@ -10,7 +10,9 @@ import sk.tuke.gamestudio.entity.Comment;
 
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+
+//import static org.junit.jupiter.api.Assertions.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringClient.class)
 public class CommentServiceTestSpring {
@@ -24,6 +26,7 @@ public class CommentServiceTestSpring {
         commentService.reset();
         //  assertEquals(0,commentService.getComments("mines").size());
         assertEquals(0,commentService.getComments("mines").size());
+     //   assertEquals()
     }
 
     @org.junit.Test

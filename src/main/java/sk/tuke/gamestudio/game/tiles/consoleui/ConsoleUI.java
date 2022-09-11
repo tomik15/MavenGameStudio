@@ -25,24 +25,28 @@ public class ConsoleUI {
                 + "");
     }
 
-    public Timestamp play() throws SQLException {
+    public int play() throws SQLException {
         printHelpMessage();
-        Instant start=Instant.now();
+     //   Instant start=Instant.now();
         long timeStart=System.currentTimeMillis();
         do {
             printField();
             processInput();
         } while (!field.isSolved());
-        Instant finish=Instant.now();
-        long timeFinish=System.currentTimeMillis();
-        long timeElapsed= Duration.between(start,finish).toSeconds();
-        long timeElapsed2=timeFinish-timeStart;
-
-        Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
+//        Instant finish=Instant.now();
+//        long timeFinish=System.currentTimeMillis();
+//        long timeElapsed= Duration.between(start,finish).toSeconds();
+//        long timeElapsed2=timeFinish-timeStart;
+//
+//        Timestamp timestamp=Timestamp.from(Instant.ofEpochSecond(timeElapsed));
         printField();
-        System.out.println("Solved");
+        int score= field.getScore();
+        //  System.out.println("tuje je score"+field.getScore());
+        return score;
 
-        return timestamp;
+//        System.out.println("Solved");
+//
+//        return timestamp;
     }
 
     private void printField() {
