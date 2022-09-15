@@ -1,12 +1,10 @@
 package sk.tuke.gamestudio.service;
 
-import sk.tuke.gamestudio.entity.Comment;
 import sk.tuke.gamestudio.exceptions.ServiceException;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 //CREATE TABLE rating (
 //        game VARCHAR(64) NOT NULL,

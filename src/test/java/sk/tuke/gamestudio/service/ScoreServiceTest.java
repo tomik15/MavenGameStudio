@@ -2,7 +2,7 @@ package sk.tuke.gamestudio.service;
 
 import org.junit.jupiter.api.Test;
 import sk.tuke.gamestudio.entity.Score;
-import sk.tuke.gamestudio.entity.ScoreNew;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 

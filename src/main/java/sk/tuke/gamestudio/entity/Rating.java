@@ -3,6 +3,15 @@ package sk.tuke.gamestudio.entity;
 import javax.persistence.*;
 import java.util.Date;
 
+
+//CREATE TABLE rating (
+//        game VARCHAR(64) NOT NULL,
+//        username VARCHAR(64) NOT NULL,
+//        rating INTEGER NOT NULL CHECK(rating BETWEEN 1 and 5),
+//        rated_at TIMESTAMP NOT NULL,
+//        CONSTRAINT game_username UNIQUE (game,username)
+//
+//        );
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(name ="GameUsername",columnNames = {"game","username"})})
 public class Rating {

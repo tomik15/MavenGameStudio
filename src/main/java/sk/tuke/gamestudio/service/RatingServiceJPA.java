@@ -32,39 +32,34 @@ public class RatingServiceJPA implements RatingService {
                     .setParameter("username",rating.getUsername())
                     .executeUpdate();
             return;
-
         }
-
-
-
-
-
     }
-
+//check this at home !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Override
     public int getAverageRating(String game) {
         final String STATEMENT_GET_AVG_RATING = "select AVG(rt.rating) from Rating rt where rt.game=:myGame";
 
-        var rating=entityManager.createQuery(STATEMENT_GET_AVG_RATING).setParameter("myGame",game).getResultList();
-        if(rating.isEmpty()){
+    var rating=entityManager.createQuery(STATEMENT_GET_AVG_RATING).setParameter("myGame",game).getResultList();
+        if(rating==null){  //// AVG VRACIA NULL I KED NIE JE ZIADNE VYSLEDKY
 
-            return 0;
-        }
-        else {
-            return ((Number)rating.get(0)).intValue();
-        }
+        return 0;
     }
+        else {
+        return ((Number)rating.get(0)).intValue();
+    }
+}
 
     @Override
     public int getRating(String game, String username) {
         final String STATEMENT_GET_RATING = "select rating from Rating rt where rt.game=:myGame and rt.username=:myUsername";
 
-        var rating=entityManager.createQuery(STATEMENT_GET_RATING).setParameter("myGame",game).setParameter("myUsername",username).getResultList();
+        var rating=entityManager.createQuery(STATEMENT_GET_RATING).setParameter("myGame",game)
+                .setParameter("myUsername",username).getResultList();
 
-        System.out.println("--------------------------------------- rating list");
-        for (Object o : rating) {
-            System.out.println(o);
-        }
+//        System.out.println("--------------------------------------- rating list");
+//        for (Object o : rating) {
+//            System.out.println(o);
+//        }
         if(rating.isEmpty()){
 
             return 0;
@@ -72,9 +67,7 @@ public class RatingServiceJPA implements RatingService {
         else {
             return ((Number)rating.get(0)).intValue();
         }
-
     }
-
     @Override
     public void reset() {
         final String STATEMENT_RESET = "DELETE FROM rating";
